@@ -1,0 +1,51 @@
+# Cache / Temporary
+__pycache__
+.cache
+tmp
+temp
+*.py[cod]
+*.so
+.coverage
+
+# OS generated
+.DS_Store*
+ehthumbs.db
+Icon?
+Thumbs.db
+
+# Editor
+*.idea
+*.swp
+*.vscode
+*~
+
+# Build
+bin/*
+lib/*
+log/*.log
+log/engine_api/*
+build/*
+*.eggs
+*.egg-info
+dist/
+sdist/
+wheels/
+var/
+MANIFEST
+_build/*
+_static/*
+_template/*
+
+
+# Environments
+venv/
+.python-version
+pyvenv.cfg
+
+# Unit test / coverage reports
+.coverage
+.tox/
+.pytest_cache/
+htmlcov/
+.coverage
+.coverage.*
