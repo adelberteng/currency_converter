@@ -1,5 +1,5 @@
 # currency_converter
-currency_converter provide 5 kinds of currency.
+currency_converter provide 8 kinds of currency.
 
 
 Taiwan Dollar TWD
