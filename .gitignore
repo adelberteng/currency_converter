@@ -20,9 +20,9 @@ Thumbs.db
 *~
 
 # Build
-bin/*
-lib/*
-log/*.log
+bin/
+lib/
+log/
 log/engine_api/*
 build/*
 *.eggs

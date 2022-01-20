@@ -56,7 +56,7 @@ class RateCrawler:
 		for src_c in rate_dict.keys():
 			exchange_dict = {}
 			for target_c in rate_dict.keys():
-				exchange_dict[target_c] =  rate_dict[src_c] / rate_dict[target_c]
+				exchange_dict[target_c] =  round(rate_dict[src_c]/rate_dict[target_c], 3)
 			mapping_rate_dict[src_c] = exchange_dict
 
 		return mapping_rate_dict
