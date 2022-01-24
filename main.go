@@ -3,14 +3,16 @@ package main
 import (
 	"context"
 	"fmt"
-	"github.com/gin-gonic/gin"
-	"github.com/go-redis/redis/v8"
 	"math"
 	"net/http"
 	"strconv"
+
+	"github.com/gin-gonic/gin"
+	"github.com/go-redis/redis/v8"
 )
 
 var ctx = context.Background()
+var err error
 
 func main() {
 	redis := redis.NewClient(&redis.Options{
@@ -19,17 +21,12 @@ func main() {
 		DB:       0,
 	})
 
-	val, err := redis.HGetAll(ctx, "TWD").Result()
-	if err != nil {
-		fmt.Println(err)
-	}
-	fmt.Println(val)
-
 	router := gin.Default()
 
 	router.GET("/rate/:currency_type", func(c *gin.Context) {
 		currency_type := c.Param("currency_type")
 		target_type := c.Query("target_type")
+		
 		var val interface{}
 		if target_type == "" {
 			val, err = redis.HGetAll(ctx, currency_type).Result()
@@ -68,7 +65,6 @@ func main() {
 			c.JSON(http.StatusBadRequest, gin.H{"message": res.Message})
 			return 
 		}
-
 
 		amount, err := strconv.ParseInt(amount_str, 10, 64)
 		if err != nil {
