@@ -4,7 +4,7 @@ import redis
 
 from rate_crawler import RateCrawler
 from config import Config
-conf = Config.load(env="dev")
+conf = Config.load(env="db")
 
 
 redis_pool = redis.ConnectionPool(
