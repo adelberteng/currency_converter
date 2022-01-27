@@ -14,10 +14,7 @@ import (
 
 var ctx = context.Background()
 var err error
-var redis, err = models.GetRedisClient()
-if err != nil {
-	
-}
+var redis= models.GetRedisClient()
 
 
 func GetCurrencyRate(c *gin.Context) {
