@@ -8,11 +8,17 @@ replace github.com/adelberteng/currency_converter/handlers => ./handlers
 
 replace github.com/adelberteng/currency_converter/routers => ./routers
 
-require github.com/adelberteng/currency_converter/routers v0.0.0-00010101000000-000000000000
+replace github.com/adelberteng/currency_converter/pkg => ./pkg
+
+require (
+	github.com/adelberteng/currency_converter/pkg v0.0.0-00010101000000-000000000000
+	github.com/adelberteng/currency_converter/routers v0.0.0-20220207062916-400565afb986
+)
 
 require (
 	github.com/adelberteng/currency_converter/handlers v0.0.0-00010101000000-000000000000 // indirect
 	github.com/adelberteng/currency_converter/models v0.0.0-00010101000000-000000000000 // indirect
+	github.com/adelberteng/go_logger v0.0.0-20220125060728-1b8b561ba4a7 // indirect
 	github.com/cespare/xxhash/v2 v2.1.2 // indirect
 	github.com/dgryski/go-rendezvous v0.0.0-20200823014737-9f7001d12a5f // indirect
 	github.com/gin-contrib/sse v0.1.0 // indirect

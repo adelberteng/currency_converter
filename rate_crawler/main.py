@@ -29,5 +29,6 @@ def main():
 if __name__ == "__main__":
     start_time = time.time()
     main()
+    print("rate crawler mission complete.")
     print(f"runtime === {round((time.time() - start_time)/60)} minutes"
         f" {round((time.time() - start_time)%60, 2)} seconds ===")
