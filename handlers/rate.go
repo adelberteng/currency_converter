@@ -14,24 +14,19 @@ import (
 
 var ctx = context.Background()
 var err error
-var redis= models.GetRedisClient()
+var redis = models.GetRedisClient()
 
 
 func GetCurrencyRate(c *gin.Context) {
 	currency_type := c.Param("currency_type")
 	target_type := c.Query("target_type")
-
+	
+	rateMap := models.GetRate(redis, currency_type)
 	var val interface{}
-	if target_type == "" {
-		val, err = redis.HGetAll(ctx, currency_type).Result()
-		if err != nil {
-			fmt.Println(err)
-		}
+	if target_type != "" {
+		val = rateMap[target_type]
 	} else {
-		val, err = redis.HGet(ctx, currency_type, target_type).Result()
-		if err != nil {
-			fmt.Println(err)
-		}
+		val = rateMap
 	}
 
 	c.JSON(http.StatusOK, gin.H{
@@ -42,7 +37,7 @@ func GetCurrencyRate(c *gin.Context) {
 }
 
 
-func PostCurrencyRate(c *gin.Context) {
+func CountCurrencyRate(c *gin.Context) {
 	var res struct {
 		Status  int     `json:"status"`
 		Message string  `json:"message"`
@@ -66,10 +61,9 @@ func PostCurrencyRate(c *gin.Context) {
 		fmt.Println(err)
 	}
 
-	val_str, err := redis.HGet(ctx, currency_type, target_type).Result()
-	if err != nil {
-		fmt.Println(err)
-	} else if val_str == "" {
+	rateMap := models.GetRate(redis, currency_type)
+	val_str := rateMap[target_type]
+	if val_str == "" {
 		res.Status = http.StatusBadRequest
 		res.Message = "currency type and target_type are not currect."
 		c.JSON(res.Status, gin.H{"message": res.Message})

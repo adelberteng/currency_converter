@@ -19,7 +19,7 @@ func Init() {
 	router := gin.Default()
 
 	router.GET("/rate/:currency_type", handlers.GetCurrencyRate)
-	router.POST("/rate", handlers.PostCurrencyRate)
+	router.POST("/rate", handlers.CountCurrencyRate)
 	
 	router.Run(":"+servicePort)
 }
