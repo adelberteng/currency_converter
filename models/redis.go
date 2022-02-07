@@ -34,6 +34,5 @@ func GetRate(r *redis.Client, currencyType string) map[string]string {
     if err != nil {
         logger.Error(err)
     }
-    logger.Debug("get rate")
     return val
 }
