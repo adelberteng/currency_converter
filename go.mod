@@ -1,32 +1,20 @@
-module currency_converter
+module github.com/adelberteng/currency_converter
 
 go 1.17
 
-replace github.com/adelberteng/currency_converter/models => ./models
-
-replace github.com/adelberteng/currency_converter/handlers => ./handlers
-
-replace github.com/adelberteng/currency_converter/routers => ./routers
-
-replace github.com/adelberteng/currency_converter/pkg => ./pkg
-
 require (
-	github.com/adelberteng/currency_converter/pkg v0.0.0-00010101000000-000000000000
-	github.com/adelberteng/currency_converter/routers v0.0.0-20220207062916-400565afb986
+	github.com/gin-gonic/gin v1.7.7
+	github.com/go-redis/redis/v8 v8.11.4
+	gopkg.in/ini.v1 v1.66.3
 )
 
 require (
-	github.com/adelberteng/currency_converter/handlers v0.0.0-00010101000000-000000000000 // indirect
-	github.com/adelberteng/currency_converter/models v0.0.0-00010101000000-000000000000 // indirect
-	github.com/adelberteng/go_logger v0.0.0-20220125060728-1b8b561ba4a7 // indirect
 	github.com/cespare/xxhash/v2 v2.1.2 // indirect
 	github.com/dgryski/go-rendezvous v0.0.0-20200823014737-9f7001d12a5f // indirect
 	github.com/gin-contrib/sse v0.1.0 // indirect
-	github.com/gin-gonic/gin v1.7.7 // indirect
 	github.com/go-playground/locales v0.13.0 // indirect
 	github.com/go-playground/universal-translator v0.17.0 // indirect
 	github.com/go-playground/validator/v10 v10.4.1 // indirect
-	github.com/go-redis/redis/v8 v8.11.4 // indirect
 	github.com/golang/protobuf v1.5.2 // indirect
 	github.com/json-iterator/go v1.1.9 // indirect
 	github.com/leodido/go-urn v1.2.0 // indirect
@@ -37,6 +25,5 @@ require (
 	golang.org/x/crypto v0.0.0-20200622213623-75b288015ac9 // indirect
 	golang.org/x/sys v0.0.0-20210423082822-04245dca01da // indirect
 	google.golang.org/protobuf v1.26.0 // indirect
-	gopkg.in/ini.v1 v1.66.3 // indirect
 	gopkg.in/yaml.v2 v2.4.0 // indirect
 )
