@@ -4,8 +4,8 @@ import (
 	"os"
 	"os/exec"
 
-	"github.com/adelberteng/currency_converter/routers"
 	"github.com/adelberteng/currency_converter/pkg"
+	"github.com/adelberteng/currency_converter/routers"
 )
 
 func main() {
@@ -16,6 +16,6 @@ func main() {
 		logger.Error(string(cmd))
 		os.Exit(1)
 	}
-	
+
 	routers.Init()
 }

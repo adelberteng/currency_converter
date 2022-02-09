@@ -1,4 +1,5 @@
-# Currency Converter
+# Currency Converter [under development]
+Convert your amount to multiple other currencies. 
 
 <summary><h2 style="display: inline-block">Table of Contents</h2></summary>
 <ol>
@@ -30,8 +31,7 @@ https://rate.bot.com.tw/xrt?Lang=en-US
 
 ## Prerequisites
 ---
-Python3   
-Golang runtime environment   
+Python3 and Golang runtime environment   
 Redis server   
 
 
@@ -93,11 +93,6 @@ go build -o currency_converter
     # example response
     {"message":"exchange complete.","result":370}
     ```
-
-
-
-
-
 
 
 ## Tests

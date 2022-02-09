@@ -24,6 +24,6 @@ func Init() {
 
 	router.GET("/rate/:currency_type", handlers.GetCurrencyRate)
 	router.POST("/rate", handlers.CountCurrencyRate)
-	
-	router.Run(":"+servicePort)
+
+	router.Run(":" + servicePort)
 }

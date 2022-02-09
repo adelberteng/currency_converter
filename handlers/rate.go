@@ -1,9 +1,9 @@
 package handlers
 
 import (
+	"context"
 	"fmt"
 	"math"
-	"context"
 	"net/http"
 	"strconv"
 
@@ -18,12 +18,10 @@ var ctx = context.Background()
 var err error
 var redis = models.GetRedisClient()
 
-
 func GetCurrencyRate(c *gin.Context) {
 	currencyType := c.Param("currency_type")
 	targetType := c.Query("target_type")
-	
-	
+
 	rateMap := models.GetRate(redis, currencyType)
 	var val interface{}
 	if targetType != "" {
@@ -31,7 +29,7 @@ func GetCurrencyRate(c *gin.Context) {
 	} else {
 		val = rateMap
 	}
-	logger.Info("currencyType: "+currencyType+" targetType: "+targetType+" val: "+fmt.Sprint(val))
+	logger.Info("currencyType: " + currencyType + " targetType: " + targetType + " val: " + fmt.Sprint(val))
 
 	c.JSON(http.StatusOK, gin.H{
 		"currency_type": currencyType,
@@ -39,7 +37,6 @@ func GetCurrencyRate(c *gin.Context) {
 		"exchange_rate": val,
 	})
 }
-
 
 func CountCurrencyRate(c *gin.Context) {
 	var res struct {
@@ -59,7 +56,7 @@ func CountCurrencyRate(c *gin.Context) {
 		res.Message = "currency type and target_type is required."
 		logger.Info(res)
 		c.JSON(http.StatusBadRequest, gin.H{"message": res.Message})
-		return 
+		return
 	}
 
 	amount, err := strconv.ParseInt(amount_str, 10, 64)
@@ -77,7 +74,6 @@ func CountCurrencyRate(c *gin.Context) {
 	}
 	val, err := strconv.ParseFloat(val_str, 64)
 
-	
 	res.Result = math.Round((float64(amount)*val)*1000) / 1000
 	res.Message = "exchange complete."
 	res.Status = http.StatusOK
