@@ -4,7 +4,8 @@ Convert your amount to multiple other currencies.
 <summary><h2 style="display: inline-block">Table of Contents</h2></summary>
 <ol>
   <li><a href="#overview">Overview</a></li>
-  <li><a href="#requirements">Requirements</a></li>
+  <li><a href="#progress">Progress</a></li>
+  <li><a href="#prerequisites">Prerequisites</a></li>
   <li><a href="#usage">Usage</a></li>
   <li><a href="#tests">Tests</a></li>
   <li><a href="#contact">Contact</a></li>
@@ -28,6 +29,25 @@ Currency Converter is a tool implemented in Go and Python, it provides 8 kinds o
 
 Foreign exchange rate reference:   
 https://rate.bot.com.tw/xrt?Lang=en-US
+
+## Progress
+---
+main:
++ [ ] main program   
+
+rate_crawler(Python):
++ [x] rate crawler module
++ [x] main.py
+
+models:
++ [x] redis
+
+handlers:
++ [x] rate
+
+tests:
++ [ ] unittest
+
 
 ## Prerequisites
 ---
