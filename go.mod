@@ -3,10 +3,10 @@ module github.com/adelberteng/currency_converter
 go 1.17
 
 require (
-	github.com/adelberteng/go_logger v0.0.0-20220207074843-5ab4b651cc1c
+	github.com/adelberteng/go_logger v0.0.0-20220210143346-fc702892e7dc
 	github.com/gin-gonic/gin v1.7.7
 	github.com/go-redis/redis/v8 v8.11.4
-	gopkg.in/ini.v1 v1.66.3
+	gopkg.in/ini.v1 v1.66.4
 )
 
 require (

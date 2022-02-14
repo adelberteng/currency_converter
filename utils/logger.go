@@ -21,5 +21,5 @@ func GetLogger() goLogger.Logger {
 		log.Fatalf("log file open error : %v", err)
 	}
 
-	return *goLogger.CreateLogger(logFile, "debug")
+	return goLogger.CreateLogger(logFile, "debug")
 }
