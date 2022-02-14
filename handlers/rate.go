@@ -1,7 +1,6 @@
 package handlers
 
 import (
-	"context"
 	"fmt"
 	"math"
 	"net/http"
@@ -10,19 +9,20 @@ import (
 	"github.com/gin-gonic/gin"
 
 	"github.com/adelberteng/currency_converter/models"
-	"github.com/adelberteng/currency_converter/pkg"
+	"github.com/adelberteng/currency_converter/utils"
 )
 
-var logger = pkg.GetLogger()
-var ctx = context.Background()
-var err error
-var redis = models.GetRedisClient()
+var (
+	logger = utils.GetLogger()
+	redis = models.GetRedisClient()
+)
 
 func GetCurrencyRate(c *gin.Context) {
 	currencyType := c.Param("currency_type")
 	targetType := c.Query("target_type")
 
 	rateMap := models.GetRate(redis, currencyType)
+
 	var val interface{}
 	if targetType != "" {
 		val = rateMap[targetType]
@@ -49,23 +49,23 @@ func CountCurrencyRate(c *gin.Context) {
 	c.BindJSON(&json)
 	logger.Info(json)
 
-	currency_type := json["currency_type"]
-	target_type := json["target_type"]
-	amount_str := json["amount"]
-	if currency_type == "" || target_type == "" {
+	currencyType := json["currency_type"]
+	targetType := json["target_type"]
+	amountStr := json["amount"]
+	if currencyType == "" || targetType == "" {
 		res.Message = "currency type and target_type is required."
 		logger.Info(res)
 		c.JSON(http.StatusBadRequest, gin.H{"message": res.Message})
 		return
 	}
 
-	amount, err := strconv.ParseInt(amount_str, 10, 64)
+	amount, err := strconv.ParseInt(amountStr, 10, 64)
 	if err != nil {
 		logger.Error(err)
 	}
 
-	rateMap := models.GetRate(redis, currency_type)
-	val_str := rateMap[target_type]
+	rateMap := models.GetRate(redis, currencyType)
+	val_str := rateMap[targetType]
 	if val_str == "" {
 		res.Status = http.StatusBadRequest
 		res.Message = "currency type and target_type are not currect."
@@ -73,6 +73,9 @@ func CountCurrencyRate(c *gin.Context) {
 		return
 	}
 	val, err := strconv.ParseFloat(val_str, 64)
+	if err != nil {
+		logger.Error(err)
+	}
 
 	res.Result = math.Round((float64(amount)*val)*1000) / 1000
 	res.Message = "exchange complete."

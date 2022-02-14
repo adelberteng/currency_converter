@@ -7,10 +7,10 @@ import (
 	redis "github.com/go-redis/redis/v8"
 	config "gopkg.in/ini.v1"
 
-	"github.com/adelberteng/currency_converter/pkg"
+	"github.com/adelberteng/currency_converter/utils"
 )
 
-var logger = pkg.GetLogger()
+var logger = utils.GetLogger()
 var ctx = context.Background()
 
 func GetRedisClient() *redis.Client {
