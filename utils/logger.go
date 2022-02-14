@@ -23,6 +23,3 @@ func GetLogger() goLogger.Logger {
 
 	return *goLogger.CreateLogger(logFile, "debug")
 }
-
-
-

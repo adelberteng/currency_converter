@@ -33,14 +33,14 @@ https://rate.bot.com.tw/xrt?Lang=en-US
 ## Progress
 ---
 main:
-+ [ ] main program   
++ [x] main program   
 
 rate_crawler(Python):
 + [x] rate crawler module
 + [x] main.py
 
 models:
-+ [x] redis
++ [x] ratedata
 
 handlers:
 + [x] rate

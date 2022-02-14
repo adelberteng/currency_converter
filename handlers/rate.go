@@ -14,21 +14,25 @@ import (
 
 var (
 	logger = utils.GetLogger()
-	redis = models.GetRedisClient()
+	rateData = models.GetRateDataModel()
 )
 
 func GetCurrencyRate(c *gin.Context) {
 	currencyType := c.Param("currency_type")
 	targetType := c.Query("target_type")
 
-	rateMap := models.GetRate(redis, currencyType)
-
 	var val interface{}
+	var err error
+
 	if targetType != "" {
-		val = rateMap[targetType]
+		val, err = rateData.GetRate(currencyType, targetType)
 	} else {
-		val = rateMap
+		val, err = rateData.GetAllRate(currencyType)
 	}
+	if err != nil {
+		logger.Error(err)
+	}
+
 	logger.Info("currencyType: " + currencyType + " targetType: " + targetType + " val: " + fmt.Sprint(val))
 
 	c.JSON(http.StatusOK, gin.H{
@@ -64,7 +68,10 @@ func CountCurrencyRate(c *gin.Context) {
 		logger.Error(err)
 	}
 
-	rateMap := models.GetRate(redis, currencyType)
+	rateMap, err := rateData.GetAllRate(currencyType)
+	if err != nil {
+		logger.Error(err)
+	}
 	val_str := rateMap[targetType]
 	if val_str == "" {
 		res.Status = http.StatusBadRequest
