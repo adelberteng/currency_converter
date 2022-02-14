@@ -8,6 +8,8 @@ import (
 	"github.com/adelberteng/currency_converter/routers"
 )
 
+var cfg = utils.GetConfig()
+
 func main() {
 	logger := utils.GetLogger()
 	cmd, err := exec.Command("python3", "rate_crawler/main.py").Output()
@@ -17,5 +19,8 @@ func main() {
 		os.Exit(1)
 	}
 
-	routers.Init()
+	router := routers.SetupRoute()
+	
+	servicePort := cfg.Section("app").Key("service_port").String()
+	router.Run(":" + servicePort)
 }
