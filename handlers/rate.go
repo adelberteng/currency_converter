@@ -5,8 +5,7 @@ import (
 	"math"
 	"net/http"
 	"strconv"
-
-	"github.com/gin-gonic/gin"
+	"errors"
 
 	"github.com/adelberteng/currency_converter/models"
 	"github.com/adelberteng/currency_converter/utils"
@@ -17,10 +16,7 @@ var (
 	rateData = models.GetRateDataModel()
 )
 
-func GetCurrencyRate(c *gin.Context) {
-	currencyType := c.Param("currency_type")
-	targetType := c.Query("target_type")
-
+func GetCurrencyRate(currencyType, targetType string) (interface{}, error) {
 	var val interface{}
 	var err error
 
@@ -31,57 +27,56 @@ func GetCurrencyRate(c *gin.Context) {
 	}
 	if err != nil {
 		logger.Error(err)
+		return "", err
 	}
 
 	logger.Info("currencyType: " + currencyType + " targetType: " + targetType + " val: " + fmt.Sprint(val))
 
-	c.JSON(http.StatusOK, gin.H{
-		"currency_type": currencyType,
-		"target_type":   targetType,
-		"exchange_rate": val,
-	})
+	return val, nil
 }
 
-func CountCurrencyRate(c *gin.Context) {
-	var res struct {
-		Status  int     `json:"status"`
-		Message string  `json:"message"`
-		Result  float64 `json:"result"`
-	}
+type Response struct {
+	Status  int     `json:"status"`
+	Message string  `json:"message"`
+	Result  float64 `json:"result"`
+}
 
-	var json map[string]string
-	c.BindJSON(&json)
-	logger.Info(json)
+func CountCurrencyRate(postBody map[string]string) (Response, error) {
+	var res Response
 
-	currencyType := json["currency_type"]
-	targetType := json["target_type"]
-	amountStr := json["amount"]
+	currencyType := postBody["currency_type"]
+	targetType := postBody["target_type"]
+	amountStr := postBody["amount"]
 	if currencyType == "" || targetType == "" {
 		res.Message = "currency type and target_type is required."
 		logger.Info(res)
-		c.JSON(http.StatusBadRequest, gin.H{"message": res.Message})
-		return
+		return res, errors.New(res.Message)
 	}
 
 	amount, err := strconv.ParseInt(amountStr, 10, 64)
 	if err != nil {
+		res.Status = http.StatusInternalServerError
 		logger.Error(err)
+		return res, err
 	}
 
 	rateMap, err := rateData.GetAllRate(currencyType)
 	if err != nil {
+		res.Status = http.StatusInternalServerError
 		logger.Error(err)
+		return res, err
 	}
 	val_str := rateMap[targetType]
 	if val_str == "" {
 		res.Status = http.StatusBadRequest
 		res.Message = "currency type and target_type are not currect."
-		c.JSON(res.Status, gin.H{"message": res.Message})
-		return
+		return res, errors.New(res.Message)
 	}
 	val, err := strconv.ParseFloat(val_str, 64)
 	if err != nil {
+		res.Status = http.StatusInternalServerError
 		logger.Error(err)
+		return res, err
 	}
 
 	res.Result = math.Round((float64(amount)*val)*1000) / 1000
@@ -89,8 +84,5 @@ func CountCurrencyRate(c *gin.Context) {
 	res.Status = http.StatusOK
 	logger.Info(res)
 
-	c.JSON(res.Status, gin.H{
-		"message": res.Message,
-		"result":  res.Result,
-	})
+	return res, nil
 }
