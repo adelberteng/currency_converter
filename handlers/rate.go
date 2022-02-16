@@ -5,84 +5,98 @@ import (
 	"math"
 	"net/http"
 	"strconv"
-	"errors"
 
 	"github.com/adelberteng/currency_converter/models"
 	"github.com/adelberteng/currency_converter/utils"
+	"github.com/gin-gonic/gin"
 )
 
 var (
 	logger = utils.GetLogger()
-	rateData = models.GetRateDataModel()
 )
 
-func GetCurrencyRate(currencyType, targetType string) (interface{}, error) {
+func GetCurrencyRate(c *gin.Context) {
+	currencyType := c.Param("currency_type")
+	targetType := c.Query("target_type")
+
 	var val interface{}
 	var err error
 
 	if targetType != "" {
-		val, err = rateData.GetRate(currencyType, targetType)
+		val, err = models.GetRate(currencyType, targetType)
 	} else {
-		val, err = rateData.GetAllRate(currencyType)
+		val, err = models.GetAllRate(currencyType)
 	}
 	if err != nil {
 		logger.Error(err)
-		return "", err
 	}
 
 	logger.Info("currencyType: " + currencyType + " targetType: " + targetType + " val: " + fmt.Sprint(val))
 
-	return val, nil
+	c.JSON(http.StatusOK, gin.H{
+		"currency_type": currencyType,
+		"target_type":   targetType,
+		"exchange_rate": val,
+	})
 }
 
-type Response struct {
-	Status  int     `json:"status"`
-	Message string  `json:"message"`
-	Result  float64 `json:"result"`
-}
+func CountCurrencyRate(c *gin.Context) {
+	var json map[string]string
+	c.BindJSON(&json)
+	logger.Info(json)
 
-func CountCurrencyRate(postBody map[string]string) (Response, error) {
-	var res Response
-
-	currencyType := postBody["currency_type"]
-	targetType := postBody["target_type"]
-	amountStr := postBody["amount"]
+	currencyType := json["currency_type"]
+	targetType := json["target_type"]
+	amountStr := json["amount"]
 	if currencyType == "" || targetType == "" {
-		res.Message = "currency type and target_type is required."
-		logger.Info(res)
-		return res, errors.New(res.Message)
+		c.JSON(http.StatusBadRequest, gin.H{
+			"message": "currency type and target_type is required.",
+			"result":  "",
+		})
+		return
 	}
 
 	amount, err := strconv.ParseInt(amountStr, 10, 64)
 	if err != nil {
-		res.Status = http.StatusInternalServerError
+		c.JSON(http.StatusInternalServerError, gin.H{
+			"message": err,
+			"result":  "",
+		})
 		logger.Error(err)
-		return res, err
+		return
 	}
 
-	rateMap, err := rateData.GetAllRate(currencyType)
+	rateStr, err := models.GetRate(currencyType, targetType)
 	if err != nil {
-		res.Status = http.StatusInternalServerError
+		c.JSON(http.StatusInternalServerError, gin.H{
+			"message": err,
+			"result":  "",
+		})
 		logger.Error(err)
-		return res, err
+		return 
 	}
-	val_str := rateMap[targetType]
-	if val_str == "" {
-		res.Status = http.StatusBadRequest
-		res.Message = "currency type and target_type are not currect."
-		return res, errors.New(res.Message)
+
+	if rateStr == "" {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"message": "currency type and target_type are not currect.",
+			"result":  "",
+		})
+		return
 	}
-	val, err := strconv.ParseFloat(val_str, 64)
+	val, err := strconv.ParseFloat(rateStr, 64)
 	if err != nil {
-		res.Status = http.StatusInternalServerError
+		c.JSON(http.StatusInternalServerError, gin.H{
+			"message": err,
+			"result":  "",
+		})
 		logger.Error(err)
-		return res, err
+		return
 	}
 
-	res.Result = math.Round((float64(amount)*val)*1000) / 1000
-	res.Message = "exchange complete."
-	res.Status = http.StatusOK
-	logger.Info(res)
+	newAmount := math.Round((float64(amount)*val)*1000) / 1000
 
-	return res, nil
+	c.JSON(http.StatusOK, gin.H{
+		"message": "exchange complete.",
+		"result":  newAmount,
+	})
 }
