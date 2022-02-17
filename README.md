@@ -1,4 +1,4 @@
-# Currency Converter [under development]
+# Currency Converter
 Convert your amount to multiple other currencies. 
 
 <summary><h2 style="display: inline-block">Table of Contents</h2></summary>
