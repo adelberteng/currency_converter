@@ -4,17 +4,15 @@ Convert your amount to multiple other currencies.
 <summary><h2 style="display: inline-block">Table of Contents</h2></summary>
 <ol>
   <li><a href="#overview">Overview</a></li>
-  <li><a href="#progress">Progress</a></li>
+  <li><a href="#feature">Feature</a></li>
   <li><a href="#prerequisites">Prerequisites</a></li>
   <li><a href="#usage">Usage</a></li>
-  <li><a href="#tests">Tests</a></li>
   <li><a href="#contact">Contact</a></li>
 </ol>
 
 <br>
 
 ## Overview
----
 Currency Converter is a tool implemented in Go and Python, it provides 8 kinds of currency to exchange from one to another.
 
 * TWD (Taiwan Dollar)
@@ -30,33 +28,18 @@ Currency Converter is a tool implemented in Go and Python, it provides 8 kinds o
 Foreign exchange rate reference:   
 https://rate.bot.com.tw/xrt?Lang=en-US
 
-## Progress
----
-main:
-+ [x] main program   
-
-rate_crawler(Python):
-+ [x] rate crawler module
-+ [x] main.py
-
-models:
-+ [x] ratedata
-
-handlers:
-+ [x] rate
-
-tests:
-+ [ ] unittest
+## Feature
++ [x] rate crawler collect data to Redis
++ [x] currency rate Get method for getting currency rate data.
++ [x] currency rate POST method for convert amount from current currency to another currency.
 
 
 ## Prerequisites
----
 Python3 and Golang runtime environment   
 Redis server   
 
 
 ## Build and Run
----
 Install python dependencies
 ```
 pip3 install -r rate_crawler/requirements.txt
@@ -113,10 +96,6 @@ go build -o currency_converter
     # example response
     {"message":"exchange complete.","result":370}
     ```
-
-
-## Tests
----
 
 
 
