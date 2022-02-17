@@ -40,19 +40,25 @@ Redis server
 
 
 ## Build and Run
-Install python dependencies
+Create Python virtualenv for isolating environment. (Optional)
+```
+virtualenv .
+. bin/activate
+```
+
+Install python dependencies.
 ```
 pip3 install -r rate_crawler/requirements.txt
 ```
 
 Run python crawler and make sure your Redis server is working.
+The rate data will be stored in Redis a day and expire after 24 hours later.
+Add this crawling mission to cronjob if you want to run this project in the long term.
 ```
 python rate_crawler/main.py
 ```
-The rate data will be stored in Redis a day and expire after 24 hours later.
-Add this crawling mission to cronjob if you want to run in the long term.
 
-Build application and API serving
+Build application and API serving.
 ```
 go build -o currency_converter
 ./currency_converter
