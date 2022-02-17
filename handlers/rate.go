@@ -42,7 +42,7 @@ func GetCurrencyRate(c *gin.Context) {
 
 func CountCurrencyRate(c *gin.Context) {
 	var json map[string]string
-	c.BindJSON(&json)
+	c.ShouldBindJSON(&json)
 	logger.Info(json)
 
 	currencyType := json["currency_type"]
