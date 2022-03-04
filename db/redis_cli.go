@@ -7,14 +7,11 @@ import (
 )
 
 
-var cfg = utils.GetConfig()
+var redisConf = utils.RedisConf
 
 func GetRedisClient() *redis.Client {
-	redisEndpoint := cfg.Section("db").Key("redis_endpoint").String()
-	redisPort := cfg.Section("db").Key("redis_port").String()
-
 	r := redis.NewClient(&redis.Options{
-		Addr:     redisEndpoint + ":" + redisPort,
+		Addr:     redisConf.Endpoint + ":" + redisConf.Port,
 		Password: "",
 		DB:       0,
 	})

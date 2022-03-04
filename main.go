@@ -6,13 +6,12 @@ import (
 )
 
 var (
-	cfg = utils.GetConfig()
+	appConf = utils.AppConf
 	logger = utils.GetLogger()
 )
 
 func main() {
 	router := routers.SetupRoute()
 	
-	servicePort := cfg.Section("app").Key("service_port").String()
-	router.Run(":" + servicePort)
+	router.Run(":" + appConf.Port)
 }

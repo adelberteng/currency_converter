@@ -7,16 +7,11 @@ import (
 	goLogger "github.com/adelberteng/go_logger"
 )
 
-var cfg = GetConfig()
-
 func GetLogger() goLogger.Logger {
-	logDir := cfg.Section("log").Key("log_dir").String()
-	logName := cfg.Section("log").Key("log_file_name").String()
-
-	os.MkdirAll(logDir, 0766)
-	logFile, err := os.OpenFile(logDir+"/"+logName, os.O_RDWR|os.O_CREATE|os.O_APPEND, 0666)
+	os.MkdirAll(LoggerConf.Dir, 0766)
+	logFile, err := os.OpenFile(LoggerConf.Dir + "/" + LoggerConf.FileName, os.O_RDWR|os.O_CREATE|os.O_APPEND, 0666)
 	if err != nil && err == os.ErrNotExist {
-		os.Create(logDir + "/" + logName)
+		os.Create(LoggerConf.Dir + "/" + LoggerConf.FileName)
 	} else if err != nil {
 		log.Fatalf("log file open error : %v", err)
 	}
