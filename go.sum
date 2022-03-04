@@ -1,5 +1,7 @@
 github.com/adelberteng/go_logger v0.0.0-20220210143346-fc702892e7dc h1:QheCsmN0tj9QSJdGGlBrawc0SwrHQ9mzNwD25xWLEs0=
 github.com/adelberteng/go_logger v0.0.0-20220210143346-fc702892e7dc/go.mod h1:85+FxwTnMVYbw6IM54UX3Rllx4Q2lhXaQNultb/Sqr0=
+github.com/adelberteng/go_logger v0.0.0-20220304083540-223ceceddf48 h1:XfkFHZuKVdnjwuE5cTG9aw1TEQd/3yNiJyQJ83wvtdQ=
+github.com/adelberteng/go_logger v0.0.0-20220304083540-223ceceddf48/go.mod h1:vwE430KDs1jbrh6H3t2TCf0H/d0PX+1v5lCHqbs6uuk=
 github.com/cespare/xxhash/v2 v2.1.2 h1:YRXhKfTDauu4ajMg1TPgFO5jnlC2HCbmLXMcTG5cbYE=
 github.com/cespare/xxhash/v2 v2.1.2/go.mod h1:VGX0DQ3Q6kWi7AoAeZDth3/j3BFtOZR5XLFGgcrjCOs=
 github.com/davecgh/go-spew v1.1.0/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=

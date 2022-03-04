@@ -22,5 +22,8 @@ func init() {
 		log.Fatalf("log file open error : %v", err)
 	}
 
-	Logger = goLogger.CreateLogger(logFile, logLevel)
+	Logger, err = goLogger.CreateLogger(logFile, logLevel)
+	if err != nil {
+		log.Fatalf("logger create error : %v", err)
+	}
 }
