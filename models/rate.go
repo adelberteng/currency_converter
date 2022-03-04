@@ -3,14 +3,14 @@ package models
 import (
 	"context"
 
-	"github.com/adelberteng/currency_converter/utils"
 	"github.com/adelberteng/currency_converter/db"
+	"github.com/adelberteng/currency_converter/utils"
 )
 
 var (
-	logger = utils.GetLogger()
-	ctx = context.Background()
-	redis = db.GetRedisClient()
+	logger = utils.Logger
+	ctx    = context.Background()
+	redis  = db.GetRedisClient()
 )
 
 func GetRate(currencyType, targetType string) (string, error) {

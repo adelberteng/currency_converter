@@ -12,7 +12,7 @@ import (
 )
 
 var (
-	logger = utils.GetLogger()
+	logger = utils.Logger
 )
 
 func GetCurrencyRate(c *gin.Context) {
@@ -73,7 +73,7 @@ func CountCurrencyRate(c *gin.Context) {
 			"result":  "",
 		})
 		logger.Error(err)
-		return 
+		return
 	}
 
 	if rateStr == "" {

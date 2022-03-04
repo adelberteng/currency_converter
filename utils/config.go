@@ -9,7 +9,7 @@ import (
 
 type RedisConfig struct {
 	Endpoint string
-	Port string
+	Port     string
 }
 
 type AppConfig struct {
@@ -17,17 +17,16 @@ type AppConfig struct {
 }
 
 type LoggerConfig struct {
-	Dir string
+	Dir      string
 	FileName string
-	Level string
+	Level    string
 }
 
 var (
-	RedisConf RedisConfig
-	AppConf AppConfig
+	RedisConf  RedisConfig
+	AppConf    AppConfig
 	LoggerConf LoggerConfig
 )
-
 
 func init() {
 	cfg, err := ini.Load("conf/config.ini")

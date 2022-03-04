@@ -7,8 +7,7 @@ import (
 	"github.com/adelberteng/currency_converter/utils"
 )
 
-var logger = utils.GetLogger()
-
+var logger = utils.Logger
 
 func SetupRoute() *gin.Engine {
 	router := gin.Default()
@@ -18,5 +17,3 @@ func SetupRoute() *gin.Engine {
 
 	return router
 }
-
-

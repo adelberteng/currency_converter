@@ -1,8 +1,8 @@
 package main
 
 import (
-	"github.com/adelberteng/currency_converter/utils"
 	"github.com/adelberteng/currency_converter/routers"
+	"github.com/adelberteng/currency_converter/utils"
 )
 
 var (
@@ -11,6 +11,6 @@ var (
 
 func main() {
 	router := routers.SetupRoute()
-	
+
 	router.Run(":" + appConf.Port)
 }
