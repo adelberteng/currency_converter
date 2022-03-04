@@ -19,6 +19,7 @@ type AppConfig struct {
 type LoggerConfig struct {
 	Dir string
 	FileName string
+	Level string
 }
 
 var (
@@ -42,4 +43,5 @@ func init() {
 
 	LoggerConf.Dir = cfg.Section("log").Key("log_dir").String()
 	LoggerConf.FileName = cfg.Section("log").Key("log_file_name").String()
+	LoggerConf.Level = cfg.Section("log").Key("log_level").String()
 }

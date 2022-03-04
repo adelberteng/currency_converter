@@ -7,7 +7,6 @@ import (
 
 var (
 	appConf = utils.AppConf
-	logger = utils.GetLogger()
 )
 
 func main() {
